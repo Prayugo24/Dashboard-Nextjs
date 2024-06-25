@@ -1,6 +1,7 @@
 import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
+// import menuItems from "@/app/lib/actions"
 import {
   MdDashboard,
   MdSupervisedUserCircle,
@@ -22,22 +23,22 @@ const menuItems = [
       {
         title: "Dashboard",
         path: "/dashboard",
-        icon: <MdDashboard />,
+        icon: <MdDashboard/>
       },
       {
         title: "Users",
         path: "/dashboard/users",
-        icon: <MdSupervisedUserCircle />,
+        icon: <MdSupervisedUserCircle/>
       },
       {
         title: "Products",
         path: "/dashboard/products",
-        icon: <MdShoppingBag />,
+        icon: <MdShoppingBag/>
       },
       {
         title: "Transactions",
         path: "/dashboard/transactions",
-        icon: <MdAttachMoney />,
+        icon: <MdAttachMoney/>
       },
     ],
   },
@@ -47,17 +48,17 @@ const menuItems = [
       {
         title: "Revenue",
         path: "/dashboard/revenue",
-        icon: <MdWork />,
+        icon: <MdWork />
       },
       {
         title: "Reports",
         path: "/dashboard/reports",
-        icon: <MdAnalytics />,
+        icon: <MdAnalytics />
       },
       {
         title: "Teams",
         path: "/dashboard/teams",
-        icon: <MdPeople />,
+        icon: <MdPeople />
       },
     ],
   },
@@ -67,31 +68,31 @@ const menuItems = [
       {
         title: "Settings",
         path: "/dashboard/settings",
-        icon: <MdOutlineSettings />,
+        icon: <MdOutlineSettings />
       },
       {
         title: "Help",
         path: "/dashboard/help",
-        icon: <MdHelpCenter />,
+        icon: <MdHelpCenter />
       },
     ],
   },
 ];
 
 const Sidebar = async () => {
-  const { user } = await auth();
+  // const { user } = await auth();
   return (
     <div className={styles.container}>
       <div className={styles.user}>
         <Image
           className={styles.userImage}
-          src={user.img || "/noavatar.png"}
+          src={"/noavatar.png"}
           alt=""
           width="50"
           height="50"
         />
         <div className={styles.userDetail}>
-          <span className={styles.username}>{user.username}</span>
+          <span className={styles.username}>{"user.username"}</span>
           <span className={styles.userTitle}>Administrator</span>
         </div>
       </div>

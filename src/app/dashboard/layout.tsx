@@ -1,13 +1,14 @@
-import Navbar from "../ui/dashboard/navbar/navbar"
-import Sidebar from "../ui/dashboard/sidebar/sidebar"
-import styles from "../ui/dashboard/dashboard.module.css"
-import Footer from "../ui/dashboard/footer/footer"
+import Navbar from "@/app/ui/dashboard/navbar/navbar"
+import Sidebar from "@/app/ui/dashboard/sidebar/sidebar"
+import styles from "@/app/ui/dashboard/dashboard.module.css"
+import Footer from "@/app/ui/dashboard/footer/footer"
+import React, { FC } from "react";
 
-export function Layout({
-  children,
-}: Readonly<{
+interface LayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>

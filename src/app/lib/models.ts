@@ -1,6 +1,20 @@
-import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+import mongoose ,{Schema, Model}from "mongoose";
+
+interface IUser extends Document {
+  username: string;
+  email: string;
+  password: string;
+  img: string;
+  isAdmin:boolean;
+  isActive:boolean;
+  phone:string;
+  address:string;
+  createtAt:Date;
+  updateAt:Date;
+}
+
+const userSchema: Schema<IUser> = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -35,11 +49,30 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    createtAt:{
+      type:Date,
+    },
+    updateAt:{
+      type:Date
+    }
   },
   { timestamps: true }
 );
 
-const productSchema = new mongoose.Schema(
+interface IProductSchema extends Document {
+  title: string;
+  desc: string;
+  price: number;
+  stock: number;
+  img:string;
+  color:string;
+  size:string;
+  address:string;
+  createtAt:Date;
+  updateAt:Date;
+}
+
+const productSchema: Schema<IProductSchema> = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -69,10 +102,16 @@ const productSchema = new mongoose.Schema(
     size: {
       type: String,
     },
+    createtAt:{
+      type:Date,
+    },
+    updateAt:{
+      type:Date
+    }
   },
   { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model("User", userSchema);
-export const Product =
-  mongoose.models.Product || mongoose.model("Product", productSchema);
+export const User:Model<IUser> = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+export const Product:Model<IProductSchema> =
+  mongoose.models.Product || mongoose.model<IProductSchema>("Product", productSchema);
