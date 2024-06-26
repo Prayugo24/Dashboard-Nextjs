@@ -1,5 +1,5 @@
-import { connectionDb } from "@/app/lib/db"; // Pastikan untuk menyesuaikan path impor sesuai dengan struktur proyek Anda
-
+import { connectToDB } from "@/app/lib/utils"
+import { User } from '@/app/lib/models';
 export interface IDetailUser {
   id: string;
   username: string;
@@ -55,3 +55,24 @@ export const updateUsers = async (user: IUpdateUser) => {
       throw error;
     }
   };
+
+  export const deleteUsers = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(`Failed to delete user: ${errorDetails.message || response.statusText}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      throw error;
+    }
+  }

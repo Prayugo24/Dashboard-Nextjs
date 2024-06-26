@@ -1,0 +1,30 @@
+/src
+  /core
+    /domain
+      /entities
+        User.ts
+      /ports
+        IUserRepository.ts
+    /usecases
+      CreateUser.ts
+      UpdateUser.ts
+  /adapters
+    /repositories
+      UserRepository.ts
+    /controllers
+      UserController.ts
+    /middlewares
+      authMiddleware.ts
+  /interfaces
+    /routes
+      userRoutes.ts
+  /config
+    db.ts
+    env.ts
+  /models
+    UserModel.ts
+/pages
+  /api
+    /users
+      index.ts
+      [userId].ts
