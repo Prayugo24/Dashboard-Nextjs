@@ -12,8 +12,6 @@ const ITEM_PER_PAGE = 2;
 
 export async function GET(request: NextRequest) {
     try {
-
-      
         const searchQ = request.nextUrl.searchParams.get('searchQ');
         const page = request.nextUrl.searchParams.get('page');
         const regex = new RegExp(searchQ || '', 'i');
@@ -30,5 +28,8 @@ export async function GET(request: NextRequest) {
         console.error(err);
         return NextResponse.json({ message: "Failed to fetch users!" });
       }
+}
+
+export async function POST(request: NextRequest) {
 
 }
