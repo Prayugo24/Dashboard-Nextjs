@@ -1,6 +1,7 @@
 "use client"
 
-import styles from './chart.module.css'
+// import styles from './chart.module.css'
+import styles from "@/styles/dashboard/chart/chart.module.css";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {dataChart} from "@/app/lib/actions"
 

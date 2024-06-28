@@ -1,6 +1,7 @@
 import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
-import styles from "./sidebar.module.css";
+// import styles from "./sidebar.module.css";
+import styles from "@/styles/dashboard/sidebar/sidebar.module.css";
 // import menuItems from "@/app/lib/actions"
 import {
   MdDashboard,

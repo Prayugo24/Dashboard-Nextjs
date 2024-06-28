@@ -1,5 +1,6 @@
 import Image from "next/image";
-import styles from "./transactions.module.css";
+// import styles from "./transactions.module.css";
+import styles from "@/styles/dashboard/transactions/transactions.module.css";
 
 const Transactions = () => {
   return (

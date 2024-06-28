@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import styles from "./navbar.module.css";
+import styles from "@/styles/dashboard/navbar/navbar.module.css";
 import {
   MdNotifications,
   MdOutlineChat,

@@ -1,5 +1,5 @@
 import { MdSupervisedUserCircle } from "react-icons/md";
-import styles from "./card.module.css";
+import styles from "@/styles/dashboard/card/card.module.css";
 
 const Card = ({ item }:{item:any}) => {
   return (

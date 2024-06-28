@@ -1,7 +1,7 @@
-import Navbar from "@/app/ui/dashboard/navbar/navbar"
-import Sidebar from "@/app/ui/dashboard/sidebar/sidebar"
-import styles from "@/app/ui/dashboard/dashboard.module.css"
-import Footer from "@/app/ui/dashboard/footer/footer"
+import Navbar from "@/component/dashboard/navbar/navbar"
+import Sidebar from "@/component/dashboard/sidebar/sidebar"
+import styles from "@/styles/dashboard/dashboard.module.css"
+import Footer from "@/component/dashboard/footer/footer"
 import React, { FC } from "react";
 
 interface LayoutProps {
