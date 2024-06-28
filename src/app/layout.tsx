@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Inter } from 'next/font/google'
 import { useRouter } from "next/navigation";
-import './ui/globals.css'
+import '@/styles/globals.css'
+
 
 
 // export const metadata: Metadata = {
