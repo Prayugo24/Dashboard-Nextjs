@@ -1,37 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { User } from '@/app/lib/models';
-import { NextRequest,NextResponse } from 'next/server';
-import { connectToDB } from "@/app/lib/utils"
-import { UserRepository } from '@/repositories/UserRepository';
-import { SearchUsers } from '@/services/user/SearchUser';
-
-const LoadDB = async()=>{
-    await connectToDB();
-}
-
-LoadDB()
-const ITEM_PER_PAGE = 2;
+import { NextRequest } from 'next/server';
+import { UserController } from '@/controller/UserController';
 
 export async function GET(request: NextRequest) {
-  const userRepository = new UserRepository();
-  const searchUsers = new SearchUsers(userRepository);
-    try {
-        const searchQ = request.nextUrl.searchParams.get('searchQ');
-        const page = request.nextUrl.searchParams.get('page');
-        const regex = new RegExp(searchQ || '', 'i');
-        const currentPage = parseInt(page || '1', 10) || 1;
-    
-        const count = await User.find({ username: { $regex: regex } }).countDocuments();
-        const users = await User.find({ username: { $regex: regex } })
-          .limit(ITEM_PER_PAGE)
-          .skip(ITEM_PER_PAGE * (currentPage - 1));
-    
-        return NextResponse.json({ count, users });
-        
-      } catch (err) {
-        console.error(err);
-        return NextResponse.json({ message: "Failed to fetch users!" });
-      }
+    return UserController.getAllUser(request)
 }
 
 export async function POST(request: NextRequest) {

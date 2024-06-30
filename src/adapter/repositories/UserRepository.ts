@@ -3,13 +3,6 @@ import { User } from '@/core/domain/entities/User';
 import { UserModel } from '@/models/UserModels';
 
 export class UserRepository implements IUserRepository {
-    async searchUsers(searchQ: string, page: number): Promise<{ count: number; users: User[] }> {
-        let counts:number;
-        let user:User[];
-        counts =1;
-        user = []
-        return { count:counts, users:user}
-    }
     async save(user: User): Promise<User> {
         const newUser:any = new UserModel(user);
         await newUser.save();
@@ -20,8 +13,26 @@ export class UserRepository implements IUserRepository {
         return UserModel.findById(id);
     }
 
-    async findAll(): Promise<User[]> {
-        return UserModel.find();
+    async findUser(keyword: string | RegExp, page: number, itemPerPage:number): Promise<{ counts: number; users: User[] }> {
+        if (page < 1 || itemPerPage < 1) {
+            throw new Error("Page number and items per page must be greater than zero.");
+        }
+        const count = await UserModel.find({ username: { $regex: keyword } }).countDocuments();
+        const user = await UserModel.find({ username: { $regex: keyword } })
+          .limit(itemPerPage)
+          .skip(itemPerPage * (page - 1));
+        
+        const allUsers: User[] = user.map((item: any) => ({
+            id: item._id.toString(), 
+            username: item.username,
+            email: item.email,
+            password: item.password,
+            phone: item.phone,
+            address: item.phone,
+            isAdmin: item.isAdmin,
+            isActive: item.isActive,
+        }));
+        return { counts:count, users:allUsers}
     }
 
     async update(user: User): Promise<User | null> {

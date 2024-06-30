@@ -2,6 +2,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/app/lib/models';
 import { connectToDB } from "@/app/lib/utils"
+import { UserController } from '@/controller/UserController';
+import { authMiddleware } from '@/middleware/AuthMiddleware';
+
+
 
 const LoadDB = async()=>{
     await connectToDB();
@@ -10,14 +14,9 @@ const LoadDB = async()=>{
 LoadDB()
 
 export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
-  try {
-      const {userId} = params
-      const user = await User.findById(userId);
-      return NextResponse.json({ user });
-    } catch (err) {
-      console.error(err);
-      return NextResponse.json({ message: "Failed to fetch users!" });
-    }
+  // const authResponse = await authMiddleware(req);
+  // if (authResponse) return authResponse;
+    return UserController.getUserById(params.userId, req);
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { userId: string } }) {

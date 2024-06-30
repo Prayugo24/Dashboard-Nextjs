@@ -23,7 +23,9 @@
       "@/component/*":["./src/interfaces/component/*"],
       "@/repositories/*":["./src/adapter/repositories/*"],
       "@/services/*":["./src/core/services/*"],
-      "@/contracts/*":["./src/core/domain/contracts/*"]
+      "@/contracts/*":["./src/core/domain/contracts/*"],
+      "@/controller/*":["./src/adapter/controller/*"],
+      "@/middleware/*":["./src/adapter/middleware/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
