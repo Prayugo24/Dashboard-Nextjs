@@ -1,5 +1,5 @@
 
-import { IronSessionData, SessionOptions } from 'iron-session';
+import { IronSessionData, SessionOptions } from 'next-iron-session';
 
 
 export const sessionOptions: SessionOptions = {
@@ -20,10 +20,11 @@ declare module 'next/server' {
     }
 }
 
-declare module 'iron-session' {
+declare module 'next-iron-session' {
   interface IronSessionData {
+    save(): unknown;
     user?: {
-      id: number;
+      id: number | string;
       admin: boolean;
     };
   }

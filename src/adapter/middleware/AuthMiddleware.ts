@@ -1,16 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getIronSession } from 'iron-session';
+import { IronSessionData, withIronSession } from 'next-iron-session';
 import { sessionOptions } from '@/config/session';
 import jwt from 'jsonwebtoken';
 import "@/config/session"
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+interface SessionData extends IronSessionData {
+  save(): unknown;
+  user?: any;
+}
 
-export async function authMiddleware(req: NextRequest) {
-  const res = NextResponse.next();
+
+export async function authMiddleware(req: NextRequest, res: NextResponse) {
+  const session = req.session as SessionData;
   
-  const session = await getIronSession(req, res, sessionOptions) as any;
 
   if (session?.user) {
     return res;
@@ -22,9 +26,9 @@ export async function authMiddleware(req: NextRequest) {
     const token = authHeader.replace('Bearer ', '');
 
     try {
-      const decodedToken = jwt.verify(token, JWT_SECRET);
-      req.session.user = decodedToken as any;
-      // await req.session.save();
+      const decodedToken = jwt.verify(token, JWT_SECRET) as any;
+      session.user = decodedToken;
+      await session.save();
       return res;
     } catch (error) {
       console.error('Invalid token:', error);
@@ -36,7 +40,3 @@ export async function authMiddleware(req: NextRequest) {
   return NextResponse.redirect(new URL('/login', req.url));
 }
 
-function isValidToken(token: string): boolean {
-  // Add your token validation logic here
-  return token === 'valid-token'; // Example logic
-}
