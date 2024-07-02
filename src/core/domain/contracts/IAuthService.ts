@@ -1,5 +1,5 @@
-import {AuthUser} from '@/core/domain/entities/AuthUser'
+import {AuthUser, ReqAuth} from '@/core/domain/entities/AuthUser'
 
 export interface IAuthService {
-    login(username: string, password: string): Promise<AuthUser | null>;
+    login(request: ReqAuth): Promise<AuthUser | null>;
 }

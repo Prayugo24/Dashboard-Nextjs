@@ -3,6 +3,26 @@ import { User } from '@/core/domain/entities/User';
 import { UserModel } from '@/models/UserModels';
 
 export class UserRepository implements IUserRepository {
+    async findOne(username: string): Promise<User | null> {
+        const user = await UserModel.findOne({ username });
+
+        if (!user) {
+            return null;
+        }
+    
+        const getUser: User = {
+            id: user._id.toString(),
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            phone: parseInt(user.phone),
+            address: user.address, // Mengoreksi dari item.phone ke item.address
+            isAdmin: user.isAdmin,
+            isActive: user.isActive,
+        };
+    
+        return getUser;
+    }
     async save(user: User): Promise<User> {
         const newUser:any = new UserModel(user);
         await newUser.save();

@@ -6,4 +6,5 @@ export interface IUserRepository {
   findById(id: string): Promise<User | null>;
   update(user: User): Promise<User | null>;
   delete(id: string): Promise<void>;
+  findOne(username: string): Promise<User | null>
 }
