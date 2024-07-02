@@ -12,42 +12,57 @@ const jwtConfig = {
 }
 
 export async function authMiddleware(req: NextRequest) {
-  // Get token from cookie
   const cookies = cookie.parse(req.headers.get('cookie') || '');
   const tokenFromCookie = cookies.token;
-
-  // Get token from Authorization header
   const authHeader = req.headers.get('Authorization');
   const tokenFromHeader = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : '';
-
-  // Choose the token to use
   const token = tokenFromHeader || tokenFromCookie;
-
   console.log("Token:", token);
 
-  // Define the paths that don't need authentication
   const publicPaths = ['/api/login', '/api/signup'];
 
-  // Allow access to public paths without authentication
   if (publicPaths.includes(req.nextUrl.pathname)) {
     return NextResponse.next();
   }
-  const session = req.cookies.get("session")?.value;
-  if (!session) return;
+  if (!token) {
+    return NextResponse.redirect(new URL('/login', req.url));
+  }
   
-  const parsed = await decrypt(session);
+  
+  try {
+    // Decrypt and validate token
+    const parsed = await decrypt(token);
+    console.log("Parsed:", parsed);
 
-  if (token) {
-    try {
-      // jwt.verify(token, JWT_SECRET);
+    // Check if token has expired
+    if (parsed) {
       return NextResponse.next();
-    } catch (error) {
-      console.error('Invalid token:', error);
+    } else {
+      // Handle expired token
+      console.error('Token expired:', token);
+      if (req.nextUrl.pathname.startsWith('/api/')) {
+        // For API requests, return a JSON response with an appropriate status
+        return NextResponse.json({
+          message: "Session expired. Please log in again.",
+          errorCode: 'JWTExpired'
+        }, { status: 401 });
+      } else {
+        // For UI requests, redirect to login
+        return NextResponse.redirect(new URL('/login', req.url));
+      }
+    }
+  } catch (error) {
+    // Handle decryption or token validation errors
+    console.error('Token error:', error);
+    if (req.nextUrl.pathname.startsWith('/api/')) {
+      // For API requests, return a JSON response with an appropriate status
+      return NextResponse.json({
+        message: "Invalid token. Please log in again.",
+        errorCode: 'TokenError'
+      }, { status: 401 });
+    } else {
+      // For UI requests, redirect to login
       return NextResponse.redirect(new URL('/login', req.url));
     }
-  } else {
-    // No token present - redirect to login
-    console.log(token)
-    // return NextResponse.redirect(new URL('/login', req.url));
   }
 }

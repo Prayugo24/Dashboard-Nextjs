@@ -4,13 +4,7 @@ import { User } from '@/app/lib/models';
 import { connectToDB } from "@/app/lib/utils"
 import { UserController } from '@/controller/UserController';
 import { authMiddleware } from '@/middleware/AuthMiddleware';
-
-
-
-const LoadDB = async()=>{
-    await connectToDB();
-}
-
+import { LoadDB } from '@/config/loadConnection';
 LoadDB()
 
 export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {

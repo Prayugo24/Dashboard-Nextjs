@@ -9,8 +9,9 @@ import { IUserRepository } from '@/core/domain/contracts/IUserRepository';
 import { UserRepository } from '@/repositories/UserRepository';
 import { CollectionRepository } from '@/repositories/CollectionRepository';
 import { RepoCollection } from '@/contracts/IRepoCollection';
+import { LoadDB } from '@/config/loadConnection';
+LoadDB()
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const repoCollection: RepoCollection = CollectionRepository()
 const { userRepository } = repoCollection
 
