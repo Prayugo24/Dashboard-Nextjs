@@ -8,17 +8,13 @@ import { LoadDB } from '@/config/loadConnection';
 LoadDB()
 
 export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
-  // const authResponse = await authMiddleware(req);
-  // if (authResponse) return authResponse;
     return UserController.getUserById(params.userId, req);
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { userId: string } }) {
     const id = params.userId;
-  
     try {
       const deletedUser = await User.findByIdAndDelete(id);
-  
       if (!deletedUser) {
         return NextResponse.json({ message: 'User not found' }, { status: 404 });
       }

@@ -1,58 +1,56 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { authConfig } from "./authconfig";
-import { connectToDB } from "./lib/utils";
-import { User } from "./lib/models";
-import bcrypt from "bcrypt";
+import { AuthUser } from '@/core/domain/entities/AuthUser';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { authApi } from './lib/service';
 
-const login = async (credentials) => {
-  try {
-    connectToDB();
-    const user = await User.findOne({ username: credentials.username });
-
-    if (!user || !user.isAdmin) throw new Error("Wrong credentials!");
-
-    const isPasswordCorrect = await bcrypt.compare(
-      credentials.password,
-      user.password
-    );
-
-    if (!isPasswordCorrect) throw new Error("Wrong credentials!");
-
-    return user;
-  } catch (err) {
-    console.log(err);
-    throw new Error("Failed to login!");
-  }
-};
 
 export const { signIn, signOut, auth } = NextAuth({
-  ...authConfig,
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
+        if (!credentials?.username || !credentials?.password) {
+          throw new Error('Username and password are required');
+        }
+
         try {
-          const user = await login(credentials);
-          return user;
+          const user: any = await authApi.login(credentials.username, credentials.password);
+
+          if (user) {
+            return {
+              name: user.username,
+              email: user.email,
+              token: user.token,
+            } as any;
+          }
+
+          throw new Error('Invalid username or password');
         } catch (err) {
+          console.error('Authorize error:', err);
           return null;
         }
       },
+      credentials: {
+        username: { label: 'Username', type: 'text' },
+        password: { label: 'Password', type: 'password' },
+      },
     }),
   ],
-  // ADD ADDITIONAL INFORMATION TO SESSION
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.username = user.username;
-        token.img = user.img;
+        token.id = user.id;
+        token.username = user.name; 
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.username = token.username;
-        session.user.img = token.img;
+        session.user = {
+          name: token.username as string,
+          email: token.email as string,
+        };
+        
       }
       return session;
     },

@@ -17,12 +17,12 @@ const Search = ({ placeholder }:{placeholder:any}) => {
     params.set("page", "1");
 
     if (e.target.value) {
-      e.target.value.length > 2 && params.set("q", e.target.value);
+      e.target.value.length > 2 && params.set("keyword", e.target.value);
     } else {
-      params.delete("q");
+      params.delete("keyword");
     }
     replace(`${pathname}?${params}`);
-  }, 300);
+  }, 1000);
 
   return (
     <div className={styles.container}>

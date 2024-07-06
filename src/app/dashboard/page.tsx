@@ -1,9 +1,9 @@
 import { cards } from "@/app/lib/data";
-import Card from "@/component/dashboard/card/card";
-import Chart from "@/component/dashboard/chart/chart";
+import Card from "@/interfaces/components/dashboard/card/card";
+import Chart from "@/interfaces/components/dashboard/chart/chart";
 import styles from "@/styles/dashboard/dashboard.module.css";
-import Rightbar from "@/component/dashboard/rightbar/rightbar";
-import Transactions from "@/component/dashboard/transactions/transactions";
+import Rightbar from "@/interfaces/components/dashboard/rightbar/rightbar";
+import Transactions from "@/interfaces/components/dashboard/transactions/transactions";
 
 const Dashboard = () => {
   return (

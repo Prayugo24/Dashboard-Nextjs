@@ -15,7 +15,9 @@ class AuthController {
                 password
             } as unknown as ReqAuth
             const user = await this.authService.login(request);
-            return NextResponse.json({ status: 200, message:"Success Login",data:{email:user?.email, token:user?.token}});
+            return NextResponse.json({ status: 200, message:"Success Login",
+                data:{username:user?.username,status:user?.status
+                ,email:user?.email, token:user?.token}});
         } catch (error) {
              if (error instanceof ApplicationException) {
                 return  NextResponse.json({

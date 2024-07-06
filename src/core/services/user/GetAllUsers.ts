@@ -13,7 +13,6 @@ export class GetAllUsers {
             throw new Error('Invalid page number');
         }
         const getAllUser =  await this.userRepository.findUser(regex, currentPage,this.ITEM_PER_PAGE)
-        console.log(getAllUser)
         return { count: getAllUser.counts, users:getAllUser.users};
     }
 }

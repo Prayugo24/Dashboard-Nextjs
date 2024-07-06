@@ -10,7 +10,6 @@ export class AuthService implements IAuthService {
     
     async login(request: ReqAuth): Promise<AuthUser | null> {
         this.validateRequest(request);
-        console.log(request)
         const user = await this.userRepository.findOne(request.username);
         if (!user) {
             throw new ApplicationException("User not found.","NotFound");
@@ -43,8 +42,6 @@ export class AuthService implements IAuthService {
 
     private async validatePassword(inputPassword: string, storedPassword: string): Promise<void> {
         const isPasswordCorrect = await bcrypt.compare(inputPassword, storedPassword);
-        console.log(inputPassword)
-        console.log(storedPassword)
         if (!isPasswordCorrect) {
             throw new ApplicationException("Invalid credentials.","Unauthorized");
         }

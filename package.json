@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/js-cookie": "^3.0.6",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
     "iron-session": "^8.0.2",
     "jose": "^5.6.2",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3",
     "next": "14.2.3",
