@@ -8,7 +8,7 @@ import { LoadDB } from '@/config/loadConnection';
 LoadDB()
 
 export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
-    return UserController.getUserById(params.userId, req);
+    return await UserController.getUserById(params.userId, req);
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { userId: string } }) {
@@ -25,6 +25,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { userI
       return NextResponse.json({ message: 'Failed to delete user!' }, { status: 500 });
     }
 }
-export async function UPDATE(request: NextRequest, { params }: { params: { userId: string } }) {
-
+export async function PUT(request: NextRequest, { params }: { params: { userId: string } }) {
+  const id = params.userId;
+  return await UserController.updateUser(id,request);
 }

@@ -1,5 +1,4 @@
 import { IUserRepository } from '@/contracts/IUserRepository';
-import { NextRequest,NextResponse } from 'next/server';
 
 export class GetAllUsers {
     private readonly ITEM_PER_PAGE: number = 2; 
